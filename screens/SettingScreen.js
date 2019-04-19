@@ -9,14 +9,14 @@ import {
 
 type Props = {};
 
-class RegisterScreen extends Component<Props> {
+class SettingScreen extends Component<Props> {
 
 
     render() {
         return (
 
             <View>
-                <Text>RegisterScreen</Text>
+                <Text>SettingScreen</Text>
 
 
             </View>
@@ -26,4 +26,4 @@ class RegisterScreen extends Component<Props> {
 
 }
 
-export default RegisterScreen;
+export default SettingScreen;

@@ -20,8 +20,12 @@ import {
     FlatList, Image
 } from 'react-native';
 
-import {createStackNavigator,createAppContainer} from 'react-navigation';
-//import RegisterScreen from './screens/RegisterScreen';
+import {createStackNavigator, createAppContainer,createBottomTabNavigator,createDrawerNavigator} from 'react-navigation';
+import RegisterScreen from './screens/RegisterScreen';
+import DashboardScreen from "./screens/DashboardScreen";
+import SettingScreen from "./screens/SettingScreen";
+import CategoryScreen from "./screens/CategoryScreen";
+import HomeScreen from "./screens/HomeScreen";
 
 
 const instructions = Platform.select({
@@ -32,34 +36,49 @@ const instructions = Platform.select({
 });
 
 type Props = {};
-class HomeScreen extends React.Component<Props> {
 
-
+class LoginScreen extends React.Component<Props> {
 
 
     render() {
         return (
 
-                <View style={styles.container}>
-                    <Text style={styles.welcome}>Welcome to React Native!</Text>
-                    <Text style={styles.instructions}>To get started, edit App.js</Text>
+            <View style={styles.container}>
+                <Text style={styles.welcome}>Welcome to React Native!</Text>
 
 
-                    <Button title='Register' onPress={()=>{
+                <TextInput
+                    placeholder='enter your username'
+                />
 
-                        this.props.navigation.push('Register')
-                        //this.props.navigation.goBack()
+                <TextInput
+                    placeholder='enter your password'
+                />
 
-                    }}  />
 
-                </View>
+                <Button title='Dashboard' onPress={() => {
+
+                    this.props.navigation.push('Dashboard')
+                    //this.props.navigation.goBack()
+
+                }}/>
+
+
+                <Button title='Register' onPress={() => {
+
+                    this.props.navigation.push('Register')
+                    //this.props.navigation.goBack()
+
+                }}/>
+
+            </View>
 
         );
     }
 
 }
 
-
+/*
 class RegisterScreen extends Component<Props> {
 
 
@@ -75,22 +94,55 @@ class RegisterScreen extends Component<Props> {
         );
     }
 
-}
+}*/
+
+
+const DashboardTabNavigator = createBottomTabNavigator({
+        HomeScreen, CategoryScreen, SettingScreen
+    },
+    {
+        navigationOptions: ({navigation}) => {
+            const {routeName} = navigation.state.routes[navigation.state.index];
+            return {
+                headerTitle: routeName
+            };
+        }
+    }
+);
+
+
+const DashboardStackNavigator = createStackNavigator({
+
+    dashboardTabNavigation: DashboardTabNavigator
+
+});
+
+const DashboardDrawerNavigator = createDrawerNavigator({
+
+    Dashboard : {
+        screen : DashboardStackNavigator
+    }
+
+});
+
 
 const AppNavigator = createStackNavigator({
 
-   Home :{
-      screen : HomeScreen
-   } ,
-    Register : {
-       screen : RegisterScreen
+    Login: {
+        screen: LoginScreen
+    },
+    Register: {
+        screen: RegisterScreen
+    },
+
+    Dashboard: {
+        screen: DashboardDrawerNavigator
     },
 
 });
 
 
- export default createAppContainer(AppNavigator);
-
+export default createAppContainer(AppNavigator);
 
 
 const styles = StyleSheet.create({
