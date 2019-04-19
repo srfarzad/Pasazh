@@ -20,6 +20,10 @@ import {
     FlatList, Image
 } from 'react-native';
 
+import {createStackNavigator,createAppContainer} from 'react-navigation';
+//import RegisterScreen from './screens/RegisterScreen';
+
+
 const instructions = Platform.select({
     ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
     android:
@@ -28,97 +32,66 @@ const instructions = Platform.select({
 });
 
 type Props = {};
-export default class App extends Component<Props> {
+class HomeScreen extends React.Component<Props> {
 
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            counter: 0,
-            isShow: true,
-        }
-
-    }
-
-    componentDidMount(){
-
-    }
-
-    increase() {
-
-        this.setState({counter: this.state.counter + 1});
-
-    }
-
-    decrease() {
-        this.setState({counter: this.state.counter - 1});
-
-    }
 
 
     render() {
         return (
-            <ScrollView>
+
                 <View style={styles.container}>
                     <Text style={styles.welcome}>Welcome to React Native!</Text>
                     <Text style={styles.instructions}>To get started, edit App.js</Text>
-                    <Text style={styles.instructions}>{instructions}</Text>
-                    <TextInput placeholder='enter data'/>
-                    <Button title="Click"/>
-                    <Button title='test' onPress={() => {
-
-                        Alert.alert('Are you sure', 'Exit', [
-
-                            {text: 'Yes', onPress: () => console.log('test')},
-                            {text: 'No', onPress: () => console.log('test')}
-
-                        ],)
-
-                    }}/>
-
-                    <FlatList
-
-                        data={[
-                            {key: 'Ali'}, {key: 'Ali'}, {key: 'Ali'}, {key: 'Ali'}, {key: 'Ali'},
-                        ]}
-
-                        renderItem={({item}) => <Text>{item.key}</Text>}
-                    />
 
 
-                    <Image source={require('./src/images/gnote.png')} style={{width: 50, height: 50}}/>
+                    <Button title='Register' onPress={()=>{
 
-                    <Image source={{uri: 'https://s.cafebazaar.ir/1/icons/ir.tgbs.peccharge_512x512.png'}}
-                           style={{width: 50, height: 50}}/>
+                        this.props.navigation.push('Register')
+                        //this.props.navigation.goBack()
 
-
-                    <View style={{flex: 1, flexDirection: 'row', paddingRight: 15, paddingLeft: 15}}>
-
-
-                        <Button title='-' onPress={() => {
-
-                            this.decrease()
-
-                        }}/>
-
-
-                        <Text> {this.state.counter} </Text>
-
-
-                        <Button title='+' onPress={() => {
-
-                            this.increase()
-                        }}/>
-
-                    </View>
+                    }}  />
 
                 </View>
-            </ScrollView>
+
         );
     }
 
 }
+
+
+class RegisterScreen extends Component<Props> {
+
+
+    render() {
+        return (
+
+            <View>
+                <Text>RegisterScreen</Text>
+
+
+            </View>
+
+        );
+    }
+
+}
+
+const AppNavigator = createStackNavigator({
+
+   Home :{
+      screen : HomeScreen
+   } ,
+    Register : {
+       screen : RegisterScreen
+    },
+
+});
+
+
+ export default createAppContainer(AppNavigator);
+
+
 
 const styles = StyleSheet.create({
     container: {
