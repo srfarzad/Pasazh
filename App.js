@@ -31,11 +31,41 @@ import HomeScreen from "./screens/HomeScreen";
 import WebViewScreen from "./screens/WebViewScreen";
 import LottieViewScreen from "./screens/LottieViewScreen";
 import firebase from 'react-native-firebase';
+import { AdMobBanner } from 'react-native-admob';
 
 
 type Props = {};
 
 class LoginScreen extends React.Component<Props> {
+
+
+    register() {
+        firebase.auth().createUserWithEmailAndPassword("test123@gmail.com","@!KK3222")
+            .then((user)=> {
+
+                Alert.alert('Welcome to App')
+
+        })
+            .catch((error)=> {
+                console.log(error)
+            })
+    }
+
+    login(){
+
+        firebase.auth().signInWithEmailAndPassword("test123@gmail.com","@!KK3222")
+            .then((user)=> {
+               // Alert.alert(user)
+                console.log(user)
+                console.log(user.email)
+
+            })
+            .catch((error)=>{
+                console.log(error)
+               // Alert.alert('error')
+            })
+
+    }
 
 
     render() {
@@ -91,7 +121,11 @@ class LoginScreen extends React.Component<Props> {
                     <Text>عضویت</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={[styles.buttonContainer, styles.fabookButton]}>
+                <TouchableOpacity style={[styles.buttonContainer, styles.fabookButton]}  onPress={()=> {
+
+                    this.register()
+
+                }} >
                     <View style={styles.socialButtonContent}>
                         <Image style={styles.icon}
                                source={{uri: 'https://png.icons8.com/facebook/androidL/40/FFFFFF'}}/>
@@ -99,12 +133,27 @@ class LoginScreen extends React.Component<Props> {
                     </View>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={[styles.buttonContainer, styles.googleButton]}>
+                <TouchableOpacity style={[styles.buttonContainer, styles.googleButton]} onPress={()=> {
+
+
+                    this.login()
+
+                }} >
                     <View style={styles.socialButtonContent}>
                         <Image style={styles.icon} source={{uri: 'https://png.icons8.com/google/androidL/40/FFFFFF'}}/>
                         <Text style={styles.loginText}>Sign in with google</Text>
                     </View>
                 </TouchableOpacity>
+
+
+                <AdMobBanner
+                    adSize="fullBanner"
+                    adUnitID="ca-app-pub-3940256099942544/6300978111"
+                    onAdFailedToLoad={error => console.log(error)}
+                />
+
+
+
             </View>
 
 
